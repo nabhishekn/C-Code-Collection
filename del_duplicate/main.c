@@ -10,13 +10,13 @@ Welcome to GDB Online.
 
 #define MAX_SIZE 100
 
-//int rev_array(int arr[], int size);
-int del_dup_num(int arr[], int size);
+int del_dup_num(int arr[], int *size);
 int print_arr(int arr[], int size);
 
 int main()
 {
-    int size, i, result;
+    int size; 
+    int i, result;
     int arr[MAX_SIZE];
     
     printf("Insert an array size:\n");
@@ -41,31 +41,37 @@ int main()
             return -1;
         } 
     }
-    del_dup_num(arr, size);
     print_arr(arr, size);
-    
+    del_dup_num(arr, &size);
+    printf("\n");
+    print_arr(arr, size);
     return 0;
 }
 
-int del_dup_num(int arr[], int size)
+int del_dup_num(int arr[], int *size)
 {
-    int i, j, k;
-    for(i=0; i<size; i++)
+    int i, j, n;
+    for(i=0; i<*size; i++)
     {
-        for(j=i+1; j<size; j++)
+        for(j=i+1; j < *size; )
         {
             if(arr[i] == arr[j])
             {
-                for(k=j; k<size-1; k++)
+                for(n=j; n < *size-1; n++)
                 {
-                    arr[k] = arr[k+1];
+                    arr[n] = arr[n+1];
                 }
-                size--;
-                j--;
+                (*size)--;
+            }
+            else
+            {
+                j++;
             }
         }
     }
 }
+
+
 
 int print_arr(int arr[], int size)
 {
